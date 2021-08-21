@@ -3,7 +3,7 @@ var generateEl = document.getElementById('generate')
 
 generateEl.addEventListener('click', () => {
   var length = +confirmLength;
-  var hasLower = confirmLower; 
+  var hasLower = confirmLower;
   var hasUpper = confirmUpper;
   var hasNumber = confirmNumber;
   var hasSymbol = confirmSymbol;
@@ -20,7 +20,7 @@ function generatePassword(lower, upper, number, symbol, length) {
 
   // console.log('typesCount', typesCount);
 
-  var typesArr = [{lower}, {upper}, {number}, {symbol}].filter(item => Object.values(item)[0]);
+  var typesArr = [{ lower }, { upper }, { number }, { symbol }].filter(item => Object.values(item)[0]);
 
   // console.log('typesArr:', typesArr);
 
@@ -28,7 +28,7 @@ function generatePassword(lower, upper, number, symbol, length) {
     return '';
   }
 
-  for(var i = 0; i < length; i += typesCount) {
+  for (var i = 0; i < length; i += typesCount) {
     typesArr.forEach(type => {
       var funcName = Object.keys(type)[0];
 
@@ -40,21 +40,30 @@ function generatePassword(lower, upper, number, symbol, length) {
 
   return generatePassword;
 }
-// checking what they want in password
-var confirmLength = window.prompt('How many character would you like?')
+
+// selecting character length 
+var confirmLength = window.prompt('How many character would you like?', 'Select between 8 and 128 characters')
+if (confirmLength >= 8 && confirmLength <= 128) {
+  alert('Confirmed')
+  // console.log('pass')
+} else {
+  confirmLength = window.prompt('Please choose between 8 and 128 characters')
+  // console.log('fail')
+}
+
+// selecting lower, upper, numbers, and symbols
 var confirmLower = window.confirm('Would you like lowercase letters?')
 var confirmUpper = window.confirm('Would you like uppercase letters?')
 var confirmNumber = window.confirm('Would you like numbers?')
 var confirmSymbol = window.confirm('Would you like symbols?')
 
-
+// stores keys
 var randomFunc = {
   lower: getRandomLower,
   upper: getRandomUpper,
   number: getRandomNumber,
   symbol: getRandomSymbol
 };
-
 
 // gets random lowercase letter
 function getRandomLower() {
@@ -73,6 +82,3 @@ function getRandomSymbol() {
   var symbols = '!@#$%^&*()[]{}=<>/,.';
   return symbols[Math.floor(Math.random() * symbols.length)];
 }
-
-
-
